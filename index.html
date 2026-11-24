@@ -1,0 +1,321 @@
+<!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
+<title>Cóndor AI Gateway</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400;14..32,500;14..32,600;14..32,700;14..32,800&family=Geist+Mono:wght@500&display=swap" rel="stylesheet">
+<style>
+/* Demo del AI Gateway para el workshop «Liderar la AI» · gramática visual 30X: negro, lima, Inter + Geist Mono */
+:root{color-scheme:dark;
+--bg:#0A0A0A;--panel:#121212;--panel2:#181818;--line:rgba(255,255,255,.10);--line2:rgba(255,255,255,.16);
+--ink:#FFFFFF;--soft:#D9D9CF;--mute:#8F8F83;--lime:#E9FF7B;--lime-bg:rgba(233,255,123,.12);
+--red:#FF6B5B;--red-bg:rgba(255,107,91,.14);--amber:#F5C84C;--amber-bg:rgba(245,200,76,.14);--blue:#7FB3FF;--blue-bg:rgba(127,179,255,.14);
+--track:rgba(255,255,255,.08);--t0:#8F8F83;--t1:#F5C84C;--t2:#7FB3FF;--t3:#E9FF7B}
+*{box-sizing:border-box;min-width:0}
+body{margin:0;background:radial-gradient(1200px 600px at 85% -10%,rgba(233,255,123,.07),transparent 60%),var(--bg);color:var(--soft);font:16px/1.55 "Inter",system-ui,sans-serif;-webkit-font-smoothing:antialiased;font-feature-settings:"cv11","ss01";overflow-x:clip;min-height:100vh}
+.mono{font-family:"Geist Mono",ui-monospace,monospace;font-weight:500;letter-spacing:.1em;font-size:12px;text-transform:uppercase;color:var(--lime)}
+header{position:sticky;top:env(safe-area-inset-top,0px);z-index:5;display:flex;align-items:center;gap:16px;padding:14px max(16px,env(safe-area-inset-right,0px)) 14px max(16px,env(safe-area-inset-left,0px));border-bottom:1px solid var(--line);background:rgba(10,10,10,.86);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);flex-wrap:wrap}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:10;background:#0A0A0A}
+.brand{display:flex;align-items:center;gap:12px}
+.brand svg{height:22px;width:auto;display:block}
+.brand .sep{width:1px;height:22px;background:var(--line2)}
+.brand h1{font-size:19px;margin:0;font-weight:700;color:var(--ink);letter-spacing:-.02em;white-space:nowrap}
+.brand h1 em{font-style:normal;color:var(--lime)}
+.demo{font-family:"Geist Mono",monospace;font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--mute);border:1px solid var(--line2);border-radius:999px;padding:3px 10px}
+nav{display:flex;gap:4px;margin-left:auto;flex-wrap:wrap;background:var(--panel);border:1px solid var(--line);border-radius:999px;padding:4px}
+nav button{font:inherit;font-size:15px;font-weight:600;background:none;border:0;color:var(--mute);padding:8px 18px;border-radius:999px;cursor:pointer;min-height:40px}
+nav button:hover{color:var(--ink)}
+nav button[aria-selected=true]{background:var(--lime);color:#0A0A0A}
+nav button:focus-visible{outline:2px solid var(--lime);outline-offset:2px}
+main{max-width:1400px;margin:0 auto;padding:28px max(16px,env(safe-area-inset-right,0px)) 48px max(16px,env(safe-area-inset-left,0px))}
+.view{display:none;gap:18px}.view.on{display:grid}
+.hero{display:flex;justify-content:space-between;align-items:flex-end;gap:20px;flex-wrap:wrap;margin-bottom:4px}
+.hero h2{font-size:clamp(28px,3.4vw,44px);line-height:1.02;margin:8px 0 0;font-weight:700;color:var(--ink);letter-spacing:-.045em}
+.hero h2 em{font-style:normal;color:var(--lime)}
+.hero p{margin:0;color:var(--mute);font-size:15px;max-width:440px}
+.hero p.mono{color:var(--lime);font-size:12px;max-width:none}
+.card{background:var(--panel);border:1px solid var(--line);border-radius:20px;padding:22px 24px}
+.card>.mono{margin:0 0 6px}
+h3.t{font-size:21px;margin:0 0 4px;color:var(--ink);font-weight:700;letter-spacing:-.02em}
+.sub{font-size:14px;color:var(--mute);margin:0 0 14px}
+.kpis{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:14px}
+.kpi .l{font-family:"Geist Mono",monospace;font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--mute)}
+.kpi .v{font-size:clamp(30px,3.4vw,46px);font-weight:700;line-height:1;margin-top:12px;font-variant-numeric:tabular-nums;white-space:nowrap;color:var(--ink);letter-spacing:-.04em}
+.kpi.hl{background:var(--lime);border-color:var(--lime)}
+.kpi.hl .l,.kpi.hl .s{color:rgba(10,10,10,.65)}.kpi.hl .v{color:#0A0A0A}
+.kpi .s{font-size:13px;color:var(--mute);margin-top:8px}
+.cols{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:18px;align-items:start}
+.bar{margin:14px 0}.bar .top{display:flex;flex-wrap:wrap;justify-content:space-between;gap:2px 10px;font-size:15px;color:var(--ink)}.bar .top span{color:var(--mute);font-variant-numeric:tabular-nums}
+.track{height:12px;border-radius:999px;background:var(--track);margin-top:8px;overflow:hidden;display:flex}
+.fill{height:100%;border-radius:999px;background:var(--lime);transition:width .6s cubic-bezier(.16,1,.3,1)}.fill.warn{background:var(--amber)}.fill.over{background:var(--red)}
+.legend{display:flex;gap:16px;flex-wrap:wrap;font-size:13px;color:var(--soft);margin-top:10px}.legend i{display:inline-block;width:9px;height:9px;border-radius:50%;margin-right:6px}
+.tier{display:inline-block;font-size:12px;font-weight:700;border-radius:999px;padding:3px 11px;white-space:nowrap;letter-spacing:.01em}
+.tier.t0{background:var(--track);color:var(--t0)}.tier.t1{background:var(--amber-bg);color:var(--t1)}.tier.t2{background:var(--blue-bg);color:var(--t2)}.tier.t3{background:var(--lime);color:#0A0A0A}
+.crit{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px}
+.crit div{border-radius:14px;padding:16px;background:var(--panel2);border:1px solid var(--line);border-top:3px solid var(--line)}
+.crit .c0{border-top-color:var(--t0)}.crit .c1{border-top-color:var(--t1)}.crit .c2{border-top-color:var(--t2)}.crit .c3{border-top-color:var(--t3)}
+.crit h4{font-size:17px;margin:0 0 6px;color:var(--ink)}.crit p{font-size:14px;color:var(--mute);margin:0}
+.crit .n{font-family:"Geist Mono",monospace;font-size:11px;color:var(--mute);letter-spacing:.1em;display:block;margin-bottom:6px}
+.scroll{overflow-x:auto}
+table{width:100%;border-collapse:collapse;font-size:15px}
+th{text-align:left;font-family:"Geist Mono",monospace;font-weight:500;font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--mute);border-bottom:1px solid var(--line);padding:8px 10px;white-space:nowrap}
+td{padding:11px 10px;border-bottom:1px solid var(--line);white-space:nowrap;color:var(--soft)}
+td:first-child{color:var(--ink);font-weight:600}
+th.n,td.n{text-align:right;font-variant-numeric:tabular-nums}
+tbody tr{cursor:pointer}tbody tr:hover{background:rgba(255,255,255,.03)}tbody tr.sel{background:var(--lime-bg)}tbody tr.sel td:first-child{color:var(--lime)}
+.q{display:inline-flex;align-items:center;gap:8px;font-variant-numeric:tabular-nums}.q .mini{width:64px;height:6px;border-radius:999px;background:var(--track);overflow:hidden}.q .mini b{display:block;height:100%}
+.detail h3{font-size:26px;margin:0;color:var(--ink);letter-spacing:-.03em}.detail .meta{color:var(--mute);font-size:14px;margin:4px 0 14px}
+.checks{list-style:none;padding:0;margin:14px 0 0;display:grid;gap:9px}
+.checks li{display:flex;gap:10px;align-items:flex-start;font-size:15px}
+.checks .ic{flex:none;width:22px;height:22px;border-radius:50%;display:grid;place-items:center;font-size:13px;font-weight:700}
+.ic.y{background:var(--lime);color:#0A0A0A}.ic.n{background:var(--track);color:var(--mute)}
+.next{margin-top:16px;font-size:15px;background:var(--panel2);border:1px solid var(--line);border-left:3px solid var(--lime);border-radius:12px;padding:12px 14px}
+.next strong{color:var(--ink)}
+.presets{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:14px}
+button{font:inherit;cursor:pointer}
+.chip{font-size:14px;font-weight:600;border:1px solid var(--line2);background:var(--panel2);color:var(--soft);border-radius:999px;padding:9px 15px;min-height:42px}
+.chip:hover,.chip:focus-visible{border-color:var(--lime);color:var(--ink);outline:none}
+label{font-family:"Geist Mono",monospace;font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--mute);display:block;margin-bottom:8px}
+select,textarea{font:inherit;font-size:16px;width:100%;color:var(--ink);background:var(--panel2);border:1px solid var(--line2);border-radius:12px;padding:11px 13px}
+select:focus,textarea:focus{outline:2px solid var(--lime);outline-offset:1px}
+textarea{min-height:100px;resize:vertical}
+.row{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:12px;align-items:end;margin-bottom:14px}
+.go{background:var(--lime);color:#0A0A0A;border:0;border-radius:999px;padding:0 28px;min-height:46px;font-weight:700}
+.go:hover{filter:brightness(1.05)}
+.results{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:18px;align-items:start}
+.empty{color:var(--mute);font-size:15px;border:1px dashed var(--line2);border-radius:20px;padding:32px;text-align:center}
+.res{animation:in .5s cubic-bezier(.16,1,.3,1)}@keyframes in{from{opacity:0;transform:translateY(10px)}}
+.res .who{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin-bottom:14px}.res .who b{font-size:18px;color:var(--ink)}.res .who span{color:var(--mute);font-size:14px}
+.score{display:flex;align-items:center;gap:16px;margin-bottom:14px}
+.score .num{font-size:64px;font-weight:700;line-height:.9;font-variant-numeric:tabular-nums;letter-spacing:-.05em}
+.score .lab{font-size:14px;color:var(--mute)}
+.status{display:inline-block;font-size:13px;font-weight:700;border-radius:999px;padding:4px 12px}
+.ok{background:var(--lime);color:#0A0A0A}.mask{background:var(--amber-bg);color:var(--amber)}.blk{background:var(--red-bg);color:var(--red)}
+.parts{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:8px;margin-bottom:14px}
+.parts div{font-size:12px;color:var(--mute)}.parts .mini{height:6px;border-radius:999px;background:var(--track);overflow:hidden;margin-top:5px}.parts .mini b{display:block;height:100%;background:var(--lime)}
+.box{font-size:14px;border-radius:12px;padding:11px 13px;background:var(--panel2);border:1px solid var(--line);overflow-wrap:anywhere;margin-top:6px;color:var(--soft)}
+.box.sys{border-left:3px solid var(--blue)}
+.box mark{background:var(--amber-bg);color:var(--amber);border-radius:4px;padding:0 3px}
+.k{font-family:"Geist Mono",monospace;font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--mute);margin-top:14px}
+.facts{display:flex;flex-wrap:wrap;gap:8px 18px;font-size:14px;color:var(--mute);margin:12px 0 0}.facts strong{color:var(--ink);font-weight:600}
+.answer{font-size:15px;margin-top:6px;white-space:pre-line;color:var(--ink)}
+.coach{margin-top:14px;border-radius:14px;background:var(--amber-bg);border:1px solid rgba(245,200,76,.3);padding:13px 15px;font-size:14px;color:var(--soft)}
+.coach strong{color:var(--amber)}
+.coach ul{margin:6px 0 10px;padding-left:18px}
+.use{background:var(--lime);border:0;color:#0A0A0A;border-radius:999px;padding:8px 16px;min-height:40px;font-size:14px;font-weight:700}
+.note{font-size:13px;color:var(--mute);margin-top:8px}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)}
+@media(max-width:900px){.cols,.results{grid-template-columns:minmax(0,1fr)}.kpis,.crit{grid-template-columns:repeat(2,minmax(0,1fr))}.parts{grid-template-columns:repeat(3,minmax(0,1fr))}nav{margin-left:0;width:100%;justify-content:space-between}nav button{flex:1;padding:8px 10px}.brand .sep,.demo{display:none}}
+@media(max-width:480px){.kpis{grid-template-columns:minmax(0,1fr)}}
+@media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+</style>
+
+<header>
+<div class="brand">
+<svg aria-label="30X" role="img" id="Capa_2" data-name="Capa 2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1080 371.23">
+  <defs>
+    <style>
+      .cls-1 {
+        fill: #f2f2f2;
+      }
+
+      .cls-2 {
+        fill: #eeff8d;
+      }
+    </style>
+  </defs>
+  <g id="Capa_1-2" data-name="Capa 1">
+    <g>
+      <polygon class="cls-1" points="133.02 93.4 29.38 90.23 29.38 5.15 226.49 5.15 133.02 93.4"/>
+      <path class="cls-1" d="M315.54,243.89c0,25.08-6.98,47.18-20.89,66.23-13.93,19.08-32.66,34.04-56.21,44.87-23.53,10.82-49.91,16.24-79.14,16.24-35.4,0-66.16-6.88-92.29-20.64-26.11-13.73-48.46-35.38-67.01-64.95l77.83-53.1c5.85,9.97,12.9,18.48,21.14,25.51,8.26,7.05,17.37,12.63,27.34,16.77,9.97,4.12,20.96,6.18,32.99,6.18,10.65,0,20.11-1.36,28.37-4.12,8.24-2.76,14.86-6.95,19.83-12.63,5-5.67,7.48-12.63,7.48-20.89,0-8.94-2.76-16.07-8.26-21.39-5.5-5.32-12.45-9.19-20.86-11.6-8.44-2.41-17.63-3.62-27.59-3.62-4.82,0-9.97.43-15.47,1.28-5.5.88-10.67,2.06-15.47,3.62-4.82,1.56-9.29,3.54-13.41,5.93l-23.73-57.75,68.29-65.65h-.08L252.73,5.15h32.49l18.45,43.84-88.33,83.83c6.78,1.43,13.46,3.36,20.01,5.88,15.29,5.85,28.95,13.83,41,23.98,12.03,10.14,21.57,22.17,28.62,36.1,7.03,13.91,10.57,28.95,10.57,45.12Z"/>
+      <polygon class="cls-2" points="1080 5.16 944.25 5.16 870.7 99.01 797.15 5.16 661.4 5.16 802.82 185.61 661.4 366.07 797.15 366.07 870.7 272.22 944.25 366.07 1080 366.07 938.57 185.61 1080 5.16"/>
+      <g>
+        <path class="cls-1" d="M565.45,366.01c-15.92,3.52-33.27,5.22-52.07,5.22s-36.86-1.76-53.1-5.32c-15.54-3.34-29.73-8.34-42.56-14.96-1.21-.6-2.41-1.23-3.59-1.88-26.99-14.79-47.38-36.1-61.11-63.95-13.76-27.84-20.61-61.01-20.61-99.5s6.15-72.01,20.61-99.5c1.88-3.57,3.84-6.98,5.87-10.24,28.87-46.15,88.88-62.64,136.63-36.48.2.13.43.23.63.35,5.87,3.26,11.35,6.83,16.44,10.8,15.09,11.6,26.89,26.29,35.88,44.46.03.03.03.08.05.1-9.97-5.67-21.69-8.49-35.15-8.49-14.19,0-26.51,2.96-36.91,8.89.08-.13.13-.28.2-.4-7.36,4.14-13.78,9.82-19.23,17.05-13.26,17-19.86,41.5-19.86,73.46,0,7.86.45,15.24,1.33,22.14,2.18,29.22,8.79,55.01,19.81,77.35,13.76,27.84,33.94,49.16,60.58,63.95,13.61,7.56,28.82,13.18,45.62,16.85.18.05.35.08.53.1Z"/>
+        <path class="cls-1" d="M459.75,5.22c15.92-3.52,33.27-5.22,52.07-5.22s36.86,1.76,53.1,5.32c15.54,3.34,29.73,8.34,42.56,14.96,1.21.6,2.41,1.23,3.59,1.88,26.99,14.79,47.38,36.1,61.11,63.95,13.76,27.84,20.61,61.01,20.61,99.5s-6.15,72.01-20.61,99.5c-1.88,3.57-3.84,6.98-5.87,10.24-28.87,46.15-88.88,62.64-136.63,36.48-.2-.13-.43-.23-.63-.35-5.87-3.26-11.35-6.83-16.44-10.8-15.09-11.6-26.89-26.29-35.88-44.46-.03-.03-.03-.08-.05-.1,9.97,5.67,21.69,8.49,35.15,8.49,14.19,0,26.51-2.96,36.91-8.89-.08.13-.13.28-.2.4,7.36-4.14,13.78-9.82,19.23-17.05,13.26-17,19.86-41.5,19.86-73.46,0-7.86-.45-15.24-1.33-22.14-2.18-29.22-8.79-55.01-19.81-77.35-13.76-27.84-33.94-49.16-60.58-63.95-13.61-7.56-28.82-13.18-45.62-16.85-.18-.05-.35-.08-.53-.1Z"/>
+      </g>
+    </g>
+  </g>
+</svg>
+<span class="sep" aria-hidden="true"></span>
+<h1>Cóndor · <em>AI Gateway</em></h1>
+<span class="demo">Demo</span>
+</div>
+<nav role="tablist" aria-label="Vistas">
+<button role="tab" id="t-empresa" aria-selected="true">Empresa</button>
+<button role="tab" id="t-personas" aria-selected="false">Personas</button>
+<button role="tab" id="t-probar" aria-selected="false">Probar en vivo</button>
+</nav>
+</header>
+<main>
+
+<section class="view on" id="v-empresa">
+<div class="hero"><div><p class="mono">Envíos Cóndor · 214 personas · noviembre</p><h2>Toda la AI de la empresa pasa <em>por un solo lugar</em></h2></div><p>Cada área con su clave y su tope. Los datos sensibles no salen. Cada consulta va al modelo que corresponde.</p></div>
+<div class="kpis">
+<div class="card kpi"><div class="l">Gasto en AI del mes</div><div class="v" id="kSpend"></div><div class="s" id="kBudget"></div></div>
+<div class="card kpi"><div class="l">Usan AI cada semana</div><div class="v" id="kAct"></div><div class="s">de 214 personas</div></div>
+<div class="card kpi"><div class="l">Datos sensibles frenados</div><div class="v" id="kBlk"></div><div class="s">Tarjetas, documentos y correos</div></div>
+<div class="card kpi hl"><div class="l">Ahorro por ruteo de modelos</div><div class="v" id="kSave"></div><div class="s">vs. mandar todo al modelo avanzado</div></div>
+</div>
+<div class="cols">
+<section class="card"><p class="mono">Control del gasto</p><h3 class="t">Gasto por área contra su tope</h3><p class="sub">Cada área tiene su clave y su presupuesto mensual.</p><div id="bars"></div></section>
+<section class="card"><p class="mono">Adopción</p><h3 class="t">Nivel de AI de la gente</h3><p class="sub">Calculado con el uso real que pasa por el gateway.</p>
+<div class="track" style="height:18px" id="tierBar" aria-hidden="true"></div><div class="legend" id="tierLegend"></div>
+<h3 class="t" style="margin-top:26px">Candidatos a champion</h3><p class="sub">Crearon asistentes que hoy usan otras personas.</p><div id="champs"></div></section>
+</div>
+</section>
+
+<section class="view" id="v-personas">
+<div class="hero"><div><p class="mono">Fluidez en AI · medida con el uso real</p><h2>Quién usa AI <em>y qué tan bien</em></h2></div><p>Basado en la rúbrica de fluidez en AI de Zapier. Nadie se autoevalúa: el nivel sale de lo que cada persona hace.</p></div>
+<section class="card"><p class="mono">Los 4 niveles</p><h3 class="t">Cómo se define el nivel de cada persona</h3><p class="sub">Criterios medidos con el uso real.</p>
+<div class="crit">
+<div class="c0"><span class="n">Nivel 1</span><h4>Inicial</h4><p>Usa AI menos de 3 veces por semana, o sus pedidos son de baja calidad (menos de 40/100).</p></div>
+<div class="c1"><span class="n">Nivel 2</span><h4>Capaz</h4><p>3 o más consultas por semana, con pedidos claros (40/100 o más).</p></div>
+<div class="c2"><span class="n">Nivel 3</span><h4>Adoptivo</h4><p>15 o más por semana, calidad 65+ y 3 o más tipos de tarea distintos.</p></div>
+<div class="c3"><span class="n">Nivel 4</span><h4>Transformador</h4><p>Calidad 85+ y creó un asistente o flujo que usan 10 o más personas.</p></div>
+</div></section>
+<div class="cols" style="grid-template-columns:minmax(0,7fr) minmax(0,5fr)">
+<section class="card"><p class="mono">Equipo</p><h3 class="t">Personas</h3><p class="sub">Tocá una fila para ver el detalle.</p>
+<div class="scroll"><table><thead><tr><th>Persona</th><th>Área</th><th>Nivel</th><th class="n">Consultas/sem.</th><th>Calidad</th></tr></thead><tbody id="people"></tbody></table></div></section>
+<section class="card detail" id="detail" aria-live="polite"></section>
+</div>
+</section>
+
+<section class="view" id="v-probar">
+<div class="hero"><div><p class="mono">Probar en vivo</p><h2>Una consulta, <em>antes y después</em> del gateway</h2></div><p>Lo que escribió la persona contra lo que recibió el modelo: puntaje, datos protegidos, modelo elegido y costo.</p></div>
+<section class="card"><p class="sub" style="margin-bottom:14px">Escribí como si fueras alguien de la empresa. El gateway puntúa el pedido, protege los datos, elige el modelo y actualiza el nivel de la persona.</p>
+<div class="presets" id="presets"></div>
+<div class="row"><div><label for="who">Quién escribe</label><select id="who"></select></div><button class="go" id="send">Enviar</button></div>
+<label for="prompt">Consulta</label><textarea id="prompt" placeholder="Escribí una consulta…"></textarea>
+</section>
+<div class="results" id="results"><div class="empty">Las últimas dos consultas aparecen acá, una al lado de la otra.</div></div>
+</section>
+
+<p class="note">Simulación con personas, datos y precios ficticios, creada para una demostración del workshop «Liderar la AI» de 30X. No se conecta a ningún modelo.</p>
+</main>
+
+<script>
+{
+const TEAMS=[{id:'ventas',name:'Ventas',budget:800,spent:412.30},{id:'atencion',name:'Atención al cliente',budget:1200,spent:1199.98},{id:'finanzas',name:'Finanzas',budget:400,spent:188.75},{id:'producto',name:'Producto',budget:1500,spent:1043.10},{id:'marketing',name:'Marketing',budget:600,spent:377.95}];
+const P=[
+ ['lucia','Lucía Fernández','ventas',31,86,5,6,18.40],['martin','Martín Ríos','ventas',2,31,1,0,0.60],
+ ['diego','Diego Salazar','finanzas',44,91,7,38,42.10],['ana','Ana Quintero','finanzas',6,58,2,0,2.70],
+ ['camila','Camila Torres','atencion',26,72,4,0,15.20],['andres','Andrés Vega','atencion',7,55,2,0,3.10],
+ ['valentina','Valentina Rojas','producto',52,89,8,21,61.80],['jorge','Jorge Medina','producto',9,61,3,0,6.40],
+ ['paula','Paula Castro','marketing',19,77,4,4,11.90],['sebastian','Sebastián Gil','marketing',1,24,1,0,0.20]
+].map(([id,name,team,week,q,kinds,users,cost])=>({id,name,team,week,q,kinds,users,cost,n:Math.max(4,week*4)}));
+P.find(p=>p.id==='martin').n=3;
+const TIERS=['Inicial','Capaz','Adoptivo','Transformador'];
+const COMPANY_TIERS=[38,31,24,7];
+const MODELS={simple:{name:'Modelo simple',price:0.4,out:150},medio:{name:'Modelo medio',price:3,out:500},avanzado:{name:'Modelo avanzado',price:15,out:1200}};
+const st={blk:37,save:6734.20,active:131};
+const CTX='Sos el asistente de Envíos Cóndor. Respondé en español, con tono cercano y profesional. No inventes datos: si falta algo, dejalo entre corchetes. Nunca pidas ni repitas datos de tarjetas.';
+const BETTER_MARTIN='Sos ejecutivo de cuentas de Envíos Cóndor. Redactá un mail para un cliente cuyo pedido lleva 5 días de demora. Objetivo: disculparnos, explicar la causa y darle una nueva fecha de entrega. Tono cercano y profesional, máximo 100 palabras, con asunto. No inventes datos: dejá entre corchetes lo que falte.';
+const PRESETS=[
+ {label:'Martín · pedido flojo',who:'martin',text:'haceme un mail para el cliente que se quejó por la demora',
+  ans:'Asunto: Su reclamo\n\nEstimado cliente: lamentamos los inconvenientes ocasionados. Estamos trabajando para resolverlo a la brevedad. Saludos cordiales.',better:BETTER_MARTIN},
+ {label:'Lucía · pedido bueno',who:'lucia',text:'Sos ejecutiva de cuentas de Envíos Cóndor. Redactá un mail para Ferretería Andes, cliente empresa con 40 envíos semanales, cuyo pedido a Medellín lleva 5 días de demora por un cambio de operador. Objetivo: que no cancele. Ofrecé el envío de esta semana sin costo y un contacto directo. Tono cercano y profesional, máximo 120 palabras, con asunto.',
+  ans:'Asunto: Su envío a Medellín: lo resolvemos esta semana\n\nHola, equipo de Ferretería Andes: les pido disculpas por los 5 días de demora en su pedido a Medellín. Cambiamos de operador en la zona y no estuvimos a la altura. Su envío sale mañana con prioridad, y el de esta semana va sin costo. Desde hoy tienen un contacto directo: yo. Cualquier cosa, me escriben a este mail o al [teléfono].\n\nGracias por seguir confiando en nosotros.\nLucía'},
+ {label:'Martín · pega datos de un cliente',who:'martin',text:'mandale al cliente juan.perez@correo.example que le devolvemos la plata a la tarjeta 4111 1111 1111 1111'},
+ {label:'Camila · área sin presupuesto',who:'camila',text:'Redactá una respuesta amable para un cliente cuyo envío lleva cinco días de demora, con una nueva fecha estimada.'}];
+const ANS_BETTER='Asunto: Su pedido está demorado: nueva fecha de entrega\n\nHola, [nombre]: le pido disculpas. Su pedido lleva 5 días de demora por [causa]. Ya lo priorizamos y llega el [nueva fecha]. Si necesita algo antes, me escribe directamente a este correo.\n\nGracias por su paciencia.\nMartín';
+const $=id=>document.getElementById(id);
+const esc=s=>String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const usd=(n,d=2)=>'USD '+n.toLocaleString('es-CO',{minimumFractionDigits:d,maximumFractionDigits:d});
+const team=id=>TEAMS.find(t=>t.id===id);
+function tierOf(p){if(p.q>=85&&p.users>=10)return 3;if(p.week>=15&&p.q>=65&&p.kinds>=3)return 2;if(p.week>=3&&p.q>=40)return 1;return 0}
+const qcol=q=>q>=70?'var(--lime)':q>=40?'var(--amber)':'var(--red)';
+const tierChip=t=>`<span class="tier t${t}">${TIERS[t]}</span>`;
+let sel='martin',hist=[];
+
+function renderEmpresa(){
+ const tot=TEAMS.reduce((a,t)=>a+t.spent,0),bud=TEAMS.reduce((a,t)=>a+t.budget,0);
+ $('kSpend').textContent=usd(tot,0);$('kBudget').textContent='de '+usd(bud,0)+' presupuestados';
+ $('kAct').textContent=st.active;$('kBlk').textContent=st.blk;$('kSave').textContent=usd(st.save,0);
+ $('bars').innerHTML=TEAMS.map(t=>{const p=Math.min(100,t.spent/t.budget*100),c=p>=99.9?'over':p>=85?'warn':'',tag=p>=99.9?' · tope alcanzado':p>=85?' · cerca del tope':'';
+  return `<div class="bar"><div class="top"><b style="font-weight:600">${esc(t.name)}</b><span>${usd(t.spent,0)} de ${usd(t.budget,0)}${tag}</span></div><div class="track"><div class="fill ${c}" style="width:${p.toFixed(1)}%"></div></div></div>`}).join('');
+ const cols=['var(--t0)','var(--t1)','var(--t2)','var(--t3)'];
+ $('tierBar').innerHTML=COMPANY_TIERS.map((v,i)=>`<div style="width:${v}%;background:${cols[i]}"></div>`).join('');
+ $('tierLegend').innerHTML=COMPANY_TIERS.map((v,i)=>`<span><i style="background:${cols[i]}"></i>${TIERS[i]} ${v}%</span>`).join('');
+ $('champs').innerHTML=P.filter(p=>p.users>0).sort((a,b)=>b.users-a.users).slice(0,3).map(p=>`<div class="bar"><div class="top"><b style="font-weight:600">${esc(p.name)} · ${esc(team(p.team).name)}</b><span>usado por ${p.users} personas</span></div></div>`).join('');
+}
+function renderPersonas(){
+ $('people').innerHTML=P.map(p=>`<tr data-id="${p.id}" class="${p.id===sel?'sel':''}"><td>${esc(p.name)}</td><td>${esc(team(p.team).name)}</td><td>${tierChip(tierOf(p))}</td><td class="n">${p.week}</td><td><span class="q"><span class="mini"><b style="width:${Math.round(p.q)}%;background:${qcol(p.q)}"></b></span>${Math.round(p.q)}</span></td></tr>`).join('');
+ const p=P.find(x=>x.id===sel),t=tierOf(p);
+ const rules=[[`Usa AI 3 o más veces por semana (hoy: ${p.week})`,p.week>=3,1],[`Calidad de sus pedidos 40 o más (hoy: ${Math.round(p.q)})`,p.q>=40,1],
+  [`Usa AI 15 o más veces por semana`,p.week>=15,2],[`Calidad 65 o más`,p.q>=65,2],[`3 o más tipos de tarea (hoy: ${p.kinds})`,p.kinds>=3,2],
+  [`Calidad 85 o más`,p.q>=85,3],[`Un asistente suyo lo usan 10 o más personas (hoy: ${p.users})`,p.users>=10,3]];
+ const next=t<3?rules.filter(r=>r[2]===t+1&&!r[1]).map(r=>{const x=r[0].replace(/ \(hoy.*\)/,'');return x.charAt(0).toLowerCase()+x.slice(1)}):[];
+ $('detail').innerHTML=`<p class="mono">Detalle</p><h3>${esc(p.name)}</h3><div class="meta">${esc(team(p.team).name)} · ${usd(p.cost)} este mes · ${p.n} consultas en el mes</div>${tierChip(t)}
+ <ul class="checks">${rules.map(r=>`<li><span class="ic ${r[1]?'y':'n'}" aria-hidden="true">${r[1]?'✓':'·'}</span><span>${esc(r[0])}<span class="sr"> ${r[1]?'(cumple)':'(no cumple)'}</span></span></li>`).join('')}</ul>
+ <div class="next">${t<3?`<strong>Para llegar a ${TIERS[t+1]}:</strong> ${esc(next.join('; '))}.`:'<strong>Nivel máximo.</strong> Candidata natural a champion de su área.'}</div>`;
+}
+document.addEventListener('click',e=>{const r=e.target.closest('#people tr');if(r){sel=r.dataset.id;renderPersonas()}});
+
+function luhn(d){let s=0,a=false;for(let i=d.length-1;i>=0;i--){let n=+d[i];if(a){n*=2;if(n>9)n-=9}s+=n;a=!a}return s%10===0}
+function protect(text){
+ const found=[];let card=false;
+ for(const m of text.matchAll(/\b(?:\d[ -]?){13,19}\b/g)){const d=m[0].replace(/\D/g,'');if(d.length>=13&&luhn(d))card=true}
+ let safe=esc(text).replace(/\b(?:\d[ -]?){13,19}\b/g,m=>luhn(m.replace(/\D/g,''))?'<mark>[TARJETA]</mark>':m);
+ safe=safe.replace(/[\w.+-]+@[\w-]+\.[\w.]+/g,()=>{found.push('correo');return '<mark>[CORREO_1]</mark>'});
+ safe=safe.replace(/(c[eé]dula|dni|documento)(\D{0,10})(\d[\d.\-]{5,14}\d)/gi,(a,b,c)=>{found.push('documento');return b+c+'<mark>[DOCUMENTO_1]</mark>'});
+ if(card)found.push('tarjeta');
+ return{card,found,safe};
+}
+function score(t,sensitive){
+ const L=t.length,low=t.toLowerCase();
+ const ctx=Math.min(25,(L>200?15:L>100?10:L>50?5:0)+(/(cliente|empresa|pedido|semana|lleva|porque|ya que|contexto|equipo)/.test(low)?10:0));
+ const obj=Math.min(25,(/(redact|resum|analiz|compar|propon|clasific|armá|escrib|list|explic|traduc|revis)/.test(low)?15:0)+(/(objetivo|para que|buscamos|meta|que no )/.test(low)?10:0));
+ const fmt=Math.min(20,(low.match(/(puntos|tabla|palabras|párrafo|asunto|máximo|formato|lista|pasos|bullets)/g)||[]).length*7);
+ const rol=Math.min(15,(low.match(/(sos |actuá como|como si fueras|tono|evitá|no inventes|criterio)/g)||[]).length*5);
+ const dat=sensitive?0:15;
+ return{total:ctx+obj+fmt+rol+dat,parts:[['Contexto',ctx,25],['Objetivo',obj,25],['Formato',fmt,20],['Rol y tono',rol,15],['Datos',dat,15]]};
+}
+function tips(parts){const T={Contexto:'Sumá contexto: quién es, qué pasó, desde cuándo.',Objetivo:'Decí qué querés lograr, con un verbo concreto.',Formato:'Pedí un formato: largo, estructura, asunto.','Rol y tono':'Dale un rol y un tono.',Datos:'No pegues datos personales ni de tarjetas.'};
+ return parts.filter(([k,v,m])=>v<m*0.6).map(([k])=>T[k])}
+function tier(text){const t=text.toLowerCase();if(/analiz|estrateg|escenario|compar|investig|proyecci|código|codigo/.test(t)||t.length>700)return['avanzado','Pide razonamiento en varios pasos.'];
+ if(/resum|clasific|traduc|corrig|extra|format/.test(t))return['simple','Tarea simple: no hace falta un modelo caro.'];return['medio','Redacción con contexto: alcanza un modelo medio.']}
+
+function send(text,whoId,preset){
+ text=(text||'').trim();if(!text){$('prompt').focus();return}
+ const p=P.find(x=>x.id===whoId),tm=team(p.team),before=tierOf(p),qBefore=p.q;
+ const pr=protect(text),sc=score(text,pr.found.length>0);
+ let status,facts='',answer='',sent='';
+ if(pr.card){st.blk++;status=['blk','Bloqueada: tenía un número de tarjeta'];answer='La consulta no salió de la empresa. Se avisó a Seguridad y quedó registrada.'}
+ else if(tm.spent>=tm.budget-0.05){status=['blk','Sin presupuesto: '+tm.name+' llegó a su tope'];answer='No se envió. El dueño del área puede pedir una ampliación a Finanzas.'}
+ else{const [k,why]=tier(text),M=MODELS[k],tin=Math.ceil((text.length+CTX.length)/4),cost=(tin+M.out)/1e6*M.price,adv=(tin+MODELS.avanzado.out)/1e6*MODELS.avanzado.price;
+  tm.spent+=cost;p.cost+=cost;st.save+=Math.max(0,adv-cost);
+  if(pr.found.length)st.blk++;
+  status=pr.found.length?['mask','Enviada con datos ocultos']:['ok','Enviada'];
+  facts=`<div class="facts"><span>Modelo: <strong>${M.name}</strong></span><span>Costo: <strong>${usd(cost,4)}</strong></span><span>${esc(why)}</span></div>`;
+  sent=`<div class="k">Lo que recibió el modelo</div><div class="box sys">${esc(CTX)}</div><div class="box">${pr.safe}</div>`;
+  answer=preset&&preset.ans?preset.ans:(text===BETTER_MARTIN?ANS_BETTER:(sc.total<40?'Respuesta genérica: el modelo tuvo que adivinar lo que faltaba.':'Respuesta entregada a la persona.'));}
+ p.q=(p.q*p.n+sc.total)/(p.n+1);p.n++;
+ if(!p._counted){p.week++;p._counted=true;if(p.week===1)st.active++}
+ const after=tierOf(p),tp=tips(sc.parts);
+ const better=preset&&preset.better;
+ const card=`<article class="card res"><div class="who"><b>${esc(p.name)}</b><span>${esc(tm.name)}</span>${tierChip(after)}${after!==before?`<span>subió de ${TIERS[before]}</span>`:''}</div>
+ <div class="score"><span class="num" style="color:${qcol(sc.total)}">${sc.total}</span><span class="lab">Calidad del pedido, sobre 100<br>Su promedio: ${Math.round(qBefore)} → ${Math.round(p.q)}</span></div>
+ <div class="parts">${sc.parts.map(([k,v,m])=>`<div>${k}<div class="mini"><b style="width:${v/m*100}%"></b></div></div>`).join('')}</div>
+ <span class="status ${status[0]}">${esc(status[1])}</span>
+ <div class="k">Lo que escribió</div><div class="box">${esc(text)}</div>${sent}${facts}
+ <div class="k">Respuesta</div><div class="answer">${esc(answer)}</div>
+ ${tp.length?`<div class="coach"><strong>El gateway le sugiere a ${esc(p.name.split(' ')[0])}:</strong><ul>${tp.map(t=>`<li>${esc(t)}</li>`).join('')}</ul>${better?`<button class="use" data-who="${p.id}">Reenviar con la versión sugerida</button>`:''}</div>`:''}</article>`;
+ hist.push(card);hist=hist.slice(-2);
+ $('results').innerHTML=hist.join('')+(hist.length<2?'<div class="empty">Probá otra consulta para comparar.</div>':'');
+ renderEmpresa();renderPersonas();
+}
+document.addEventListener('click',e=>{const b=e.target.closest('.use');if(b){$('who').value=b.dataset.who;$('prompt').value=BETTER_MARTIN;send(BETTER_MARTIN,b.dataset.who,{ans:ANS_BETTER})}});
+
+$('who').innerHTML=P.map(p=>`<option value="${p.id}">${esc(p.name)} · ${esc(team(p.team).name)}</option>`).join('');
+$('presets').innerHTML=PRESETS.map((p,i)=>`<button class="chip" data-i="${i}">${esc(p.label)}</button>`).join('');
+$('presets').addEventListener('click',e=>{const b=e.target.closest('.chip');if(!b)return;const p=PRESETS[+b.dataset.i];$('who').value=p.who;$('prompt').value=p.text});
+$('send').addEventListener('click',()=>{const t=$('prompt').value.trim(),pre=PRESETS.find(p=>p.text===t);send(t,$('who').value,pre)});
+$('prompt').addEventListener('keydown',e=>{if(e.key==='Enter'&&(e.metaKey||e.ctrlKey))$('send').click()});
+const views=['empresa','personas','probar'];
+function show(v){views.forEach(x=>{$('v-'+x).classList.toggle('on',x===v);$('t-'+x).setAttribute('aria-selected',x===v)})}
+views.forEach(v=>$('t-'+v).addEventListener('click',()=>{show(v);try{history.replaceState(null,'','#'+v)}catch(_){}}));
+if(views.includes(location.hash.slice(1)))show(location.hash.slice(1));
+renderEmpresa();renderPersonas();
+}
+</script>
+
+</body></html>
